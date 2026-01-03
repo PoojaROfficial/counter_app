@@ -5,7 +5,6 @@ void main() {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
 
-  
   static final CounterNotifier counterNotifier = CounterNotifier();
 
   @override
@@ -34,10 +32,7 @@ class CounterPage extends StatelessWidget {
           builder: (context, _) {
             return Text(
               counterNotifier.count.toString(),
-              style: const TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
             );
           },
         ),
@@ -45,13 +40,23 @@ class CounterPage extends StatelessWidget {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            onPressed: counterNotifier.increment,
-            child: const Icon(Icons.add),
+          AnimatedBuilder(
+            animation: counterNotifier,
+            builder: (context, _) {
+              return counterNotifier.count < 10
+                  ? FloatingActionButton(
+                      onPressed: counterNotifier.increment,
+                      child: const Icon(Icons.add),
+                    )
+                  : const SizedBox();
+            },
           ),
+
           const SizedBox(height: 10),
           FloatingActionButton(
-            onPressed: counterNotifier.decrement,
+            onPressed: () {
+              counterNotifier.decrement(context);
+            },
             child: const Icon(Icons.remove),
           ),
         ],
