@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'counter_notifier.dart';
 
 void main() {
@@ -55,7 +56,15 @@ class CounterPage extends StatelessWidget {
           const SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () {
-              counterNotifier.decrement(context);
+              final success = counterNotifier.decrement();
+
+              if (!success) {
+                Fluttertoast.showToast(
+                  msg: "Count cannot be less than 0",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                );
+              }
             },
             child: const Icon(Icons.remove),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class CounterNotifier extends ChangeNotifier {
   int count = 0;
 
@@ -10,17 +11,13 @@ class CounterNotifier extends ChangeNotifier {
     }
   }
 
-  void decrement(BuildContext context) {
+  bool decrement() {
     if (count > 0) {
       count--;
+
       notifyListeners();
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Count cannot be less than 0"),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      return true;
     }
+    return false;
   }
 }
